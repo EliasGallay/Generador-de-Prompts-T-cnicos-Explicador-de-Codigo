@@ -65,6 +65,133 @@ Sección donde se almacenan todos los prompts y explicaciones generadas.
 
 ## 📂 Estructura del proyecto
 
-# Generador-de-Prompts-T-cnicos-Explicador-de-Codigo
-# Generador-de-Prompts-T-cnicos-Explicador-de-Codigo
-# Generador-de-Prompts-T-cnicos-Explicador-de-Codigo
+PROMPT/
+├── app/
+│ ├── components/
+│ ├── pages/
+│ │ ├── 1_Generador_de_Prompts.py
+│ │ ├── 2_Explicador_de_Código.py
+│ │ ├── 3_Historial.py
+│ ├── prompts/
+│ │ └── templates.py
+│ ├── utils/
+│ │ ├── streamlit_app.py
+│ │ ├── storage.py
+│ │ └── costs.py
+│ └── services/
+│
+└── data/
+└── history.json
+
+
+
+---
+
+## 🚀 Ejecución del proyecto
+
+### 1️⃣ Instalar dependencias
+```bash
+pip install streamlit
+
+
+2️⃣ Ejecutar la app
+
+## Desde la carpeta raíz del proyecto:
+    streamlit run app/streamlit_app.py
+
+## La app estara disponible en: 
+    http://localhost:8501
+
+
+
+### Ejemplo de uso:
+
+## Entrada: 
+ Crear un endpoint REST en Express para /users con validaciones, paginación y tests Jest.
+
+##Salida Generada: 
+    # Prompt técnico – ChatGPT
+_Generado: 2025-11-06_
+
+**Actuá como** un desarrollador senior.
+
+## Tarea
+"Crear un endpoint REST en Express para /users con validaciones, paginación y tests Jest."
+
+## Formato de salida
+1) Resumen
+2) Pasos detallados
+3) Código
+4) Pruebas / casos
+5) Riesgos y mitigaciones
+
+
+
+Explicador de codigo: 
+
+## Entrada: 
+    function getAverage(nums) {
+  let sum = 0;
+  for (let i = 0; i < nums.length; i++) {
+    sum += nums[i];
+  }
+  return sum / nums.length;
+}
+
+
+##Salida Generada: 
+    # Explicador de Código – JavaScript
+_Generado: 2025-11-06_
+
+## Código a analizar
+```js
+function getAverage(nums) { ... }
+
+
+Formato de salida
+
+Explicación línea por línea
+
+Buenas prácticas y estilo
+
+Posibles errores o mejoras
+
+Recomendaciones de refactorización
+
+
+
+---
+
+## 📊 Estimación de costos IA
+El módulo `utils/costs.py` permite estimar el costo aproximado en USD según tokens generados para distintos modelos (ej. GPT-4o-mini).
+
+```python
+from app.utils.costs import estimate_cost
+estimate_cost(prompt_chars=1500, completion_chars=2500)
+# {'model': 'gpt-4o-mini', 'tokens_in': 375, 'tokens_out': 625, 'usd': 0.0005}
+
+
+
+Se desarrolló una aplicación web funcional con Streamlit y salida dirigida, cumpliendo todos los criterios del proyecto.
+✅ Permite generar prompts de alta calidad para tareas técnicas.
+✅ Facilita la explicación estructurada de código con IA.
+✅ Integra persistencia local, exportación y estimación de costos.
+
+Aprendizajes principales:
+
+Diseño de prompts efectivos y modulares.
+
+Integración de IA en flujos reales de desarrollo.
+
+Implementación práctica de interfaces con Streamlit.
+
+👤 Autor
+
+Elias Gallay
+📧 [email protected]
+💼 GitHub – EliasGallay
+
+🧠 Licencia
+
+Proyecto educativo – Coderhouse 2025
+Uso libre para fines académicos y demostrativos.
