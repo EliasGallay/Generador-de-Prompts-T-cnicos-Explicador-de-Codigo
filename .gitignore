@@ -5,10 +5,12 @@ venv/
 .env
 .env.local
 .envExample
-__pycache__/
+**/__pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+*.so
+*.dll
 
 # ===============================
 #  CONFIGURACIÓN Y METADATOS
@@ -17,6 +19,7 @@ __pycache__/
 .idea/
 .vscode/
 *.log
+.python-version
 
 # ===============================
 #  ARCHIVOS TEMPORALES / BACKUPS
@@ -42,6 +45,8 @@ dist/
 # ===============================
 .streamlit/secrets.toml
 .streamlit/config.toml
+.streamlit/state.json
+.streamlit/*.lock
 
 # ===============================
 #  DATA Y ARCHIVOS GENERADOS
@@ -52,6 +57,8 @@ app/data/history.json
 *.json.backup
 *.csv
 *.zip
+*.tar
+*.gz
 
 # ===============================
 #  IA / API KEYS / OUTPUTS
@@ -60,3 +67,14 @@ app/data/history.json
 *.bin
 *.pt
 *.pkl
+*.onnx
+*.h5
+*.ckpt
+
+# ===============================
+#  TESTS Y REPORTES
+# ===============================
+.coverage
+htmlcov/
+.cache/
+pytest_cache/
