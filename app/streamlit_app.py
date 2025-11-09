@@ -15,8 +15,8 @@ st.set_page_config(
 
 st.markdown("""
     <style>
-        /* REMOVIDO: [data-testid="stSidebarNav"] {display: none;} */
-        /* REMOVIDO: header {visibility: hidden;} */
+        [data-testid="stSidebarNav"] {display: none;} */
+         header {visibility: hidden;} */
         .stApp {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: #f1f5f9;
