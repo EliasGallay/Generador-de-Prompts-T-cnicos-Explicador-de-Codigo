@@ -3,6 +3,7 @@ from app.prompts.templates import build_technical_prompt
 from app.utils.storage import add_item
 from app.services.llm_gemini import generate_response
 from app.utils.costs import estimate_cost 
+from app.utils.storage import add_item
 
 
 def render():
@@ -133,6 +134,12 @@ def render():
                 with st.spinner("Optimizando con Gemini…"):
                     improved = generate_response(system, prompt)
                 st.text_area("Prompt mejorado por Gemini", value=improved, height=240)
+                add_item(
+                    kind="generator",
+                    title=f"Prompt técnico mejorado – {destino}",
+                    content=improved,
+                    meta={"destino": destino, "lenguaje": lenguaje, "stack": stack, "optimized_with_ai": True},
+                )
                 st.download_button(
                     label="Descargar mejora como .md",
                     data=improved.encode("utf-8"),
@@ -154,6 +161,12 @@ def render():
                     with st.spinner("Generando mejora con Gemini…"):
                         improved2 = generate_response(system, prompt)
                     st.text_area("Prompt mejorado por Gemini", value=improved2, height=240, key="improved2")
+                    add_item(
+                        kind="generator",
+                        title=f"Prompt técnico mejorado – {destino}",
+                        content=improved2,
+                        meta={"destino": destino, "lenguaje": lenguaje, "stack": stack, "optimized_with_ai": True},
+                    )
                     st.download_button(
                         label="Descargar mejora como .md",
                         data=improved2.encode("utf-8"),

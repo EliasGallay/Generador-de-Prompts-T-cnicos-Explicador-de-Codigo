@@ -1,6 +1,7 @@
 import streamlit as st
 from app.services.llm_gemini import generate_response
 from app.utils.costs import estimate_cost
+from app.utils.storage import add_item
 
 def render():
     st.subheader(" Explicador de Código con IA")
@@ -43,6 +44,11 @@ def render():
                 explicacion = generate_response(system, prompt)
 
             st.text_area(" Explicación generada por Gemini", value=explicacion, height=300)
+            add_item(
+                kind="explainer",
+                title=f"Explicación de código ({lenguaje or 'auto'}, {nivel})",
+                content=explicacion,
+                meta={"lenguaje": lenguaje, "nivel": nivel},)
             st.download_button(
                 label="Descargar explicación.md",
                 data=explicacion.encode("utf-8"),
