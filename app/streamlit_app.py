@@ -10,12 +10,13 @@ if str(PROJECT_ROOT) not in sys.path:
 st.set_page_config(
     page_title="Prompt Engineering para Programadores",
     layout="wide",
+    initial_sidebar_state="expanded", 
 )
 
 st.markdown("""
     <style>
-        [data-testid="stSidebarNav"] {display: none;}
-        header {visibility: hidden;}
+        /* REMOVIDO: [data-testid="stSidebarNav"] {display: none;} */
+        /* REMOVIDO: header {visibility: hidden;} */
         .stApp {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: #f1f5f9;
@@ -67,10 +68,9 @@ else:
         render()
     else:
         st.info(
-            "El módulo seleccionado no expone una función `render()`. "
+            "El módulo seleccionado no expone una función `render()`."
         )
 
-# --- Footer simple ---
 st.markdown(
     """
     <hr style="margin-top:3rem;margin-bottom:1rem;opacity:.2">
