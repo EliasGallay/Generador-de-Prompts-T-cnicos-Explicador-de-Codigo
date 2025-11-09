@@ -1,4 +1,3 @@
-# app/utils/costs.py
 def approx_tokens(chars: int) -> int:
     # Regla simple ~4 chars por token
     return max(1, round(chars / 4))

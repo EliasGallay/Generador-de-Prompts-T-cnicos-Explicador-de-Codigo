@@ -51,7 +51,7 @@ with st.sidebar:
     st.markdown("---")
     st.caption("Proyecto Final • Coderhouse • Streamlit + Prompt Engineering")
 
-st.title("🧩 Prompt Engineering para Programadores")
+st.title(" Prompt Engineering para Programadores")
 st.write(
     "Esta aplicación incluye herramientas con **salida dirigida** para acelerar tareas técnicas: "
     "generación de prompts optimizados y explicación de código."
