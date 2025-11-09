@@ -2,10 +2,11 @@ import streamlit as st
 from app.prompts.templates import build_technical_prompt
 from app.utils.storage import add_item
 from app.services.llm_gemini import generate_response
+from app.utils.costs import estimate_cost 
 
 
 def render():
-    st.subheader("🏗️ Generador de Prompts Técnicos")
+    st.subheader(" Generador de Prompts Técnicos")
     st.caption("Ingresá una tarea técnica y obtené un prompt optimizado listo para usar.")
 
     # --- Ejemplos predefinidos ---
@@ -112,6 +113,13 @@ def render():
             file_name="prompt_tecnico.md",
             mime="text/markdown",
             use_container_width=True,
+        )
+
+        #  Costo estimado del prompt + respuesta (respuesta estimada en 2000 chars)
+        cost_info = estimate_cost(prompt_chars=len(prompt), completion_chars=2000)
+        st.caption(
+            f"💰 **Costo estimado:** {cost_info['usd']:.4f} USD · "
+            f"({cost_info['tokens_in']} ⬆️ / {cost_info['tokens_out']} ⬇️ tokens · modelo {cost_info['model']})"
         )
 
         # Si el usuario eligió la opción con IA, devolvemos también la versión mejorada
