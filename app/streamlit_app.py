@@ -10,7 +10,7 @@ if str(PROJECT_ROOT) not in sys.path:
 st.set_page_config(
     page_title="Prompt Engineering para Programadores",
     layout="wide",
-    initial_sidebar_state="expanded",  # <-- nuevo
+    initial_sidebar_state="expanded", 
 )
 
 st.markdown("""
