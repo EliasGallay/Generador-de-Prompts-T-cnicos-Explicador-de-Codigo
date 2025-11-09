@@ -1,79 +1,52 @@
-# app/pages/2_Explicador_de_Código.py
 import streamlit as st
-from datetime import datetime
-from app.utils.storage import add_item
-
-
-def build_code_explainer_prompt(code: str, language: str, focus: list[str] | None = None) -> str:
-    """
-    Construye un prompt para explicar y analizar código con salida dirigida.
-    """
-    focus = focus or [
-        "1) Explicación línea por línea",
-        "2) Buenas prácticas y estilo",
-        "3) Posibles errores o mejoras",
-        "4) Recomendaciones de refactorización",
-        "5) Ejemplo de versión optimizada (si aplica)",
-    ]
-
-    header = f"# Explicador de Código – {language}\n_Generado: {datetime.now().strftime('%Y-%m-%d %H:%M')}_\n\n"
-    rol = "Actuá como un revisor técnico experto y mentor de código.\n"
-    code_block = f"## Código a analizar\n```{language.lower()}\n{code.strip()}\n```\n\n"
-    salida_block = "## Formato de salida (obligatorio)\n" + "\n".join([f"- {s}" for s in focus]) + "\n\n"
-
-    return header + rol + code_block + salida_block + (
-        "## Instrucción final\n"
-        "Proporcioná una explicación detallada y estructurada. "
-        "Si detectás problemas, proponé alternativas justificadas con ejemplos.\n"
-    )
-
+from app.services.llm_gemini import generate_response
 
 def render():
-    st.subheader("🧠 Explicador de Código")
-    st.caption("Pegá un fragmento de código y obtené una explicación técnica estructurada.")
+    st.subheader("🧠 Explicador de Código con IA")
+    st.caption("Pegá un fragmento de código y obtené una explicación generada con Gemini.")
 
-    with st.form("form_code_explainer"):
-        lang = st.selectbox(
-            "Lenguaje principal",
-            ["JavaScript/TypeScript", "Python", "Java", "C#", "SQL", "Otro"],
-            index=0,
-        )
-        code = st.text_area(
-            "Código",
-            placeholder="Pegá acá tu código…",
-            height=240,
-        )
-        focus_text = st.text_area(
-            "Aspectos a analizar (opcional, una por línea)",
-            placeholder="Ej:\n1) Explicación línea por línea\n2) Buenas prácticas\n3) Optimización de performance\n4) Legibilidad\n5) Recomendaciones",
-            height=100,
-        )
+    codigo = st.text_area(
+        "Tu código",
+        placeholder="Pegá aquí el código fuente que querés explicar...",
+        height=200,
+    )
 
-        submit = st.form_submit_button("Generar explicación", type="primary", use_container_width=True)
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        lenguaje = st.selectbox("Lenguaje", ["(auto)", "Python", "JavaScript", "Java", "C#", "SQL", "Go", "Otro"])
+    with col2:
+        nivel = st.selectbox("Nivel de detalle", ["básico", "intermedio", "avanzado"])
 
-    if submit:
-        if not code.strip():
-            st.warning("Pegá un fragmento de código para analizar.")
+    if st.button("✨ Explicar con IA", use_container_width=True, type="primary"):
+        if not codigo.strip():
+            st.warning("Pegá un fragmento de código primero.")
             return
 
-        focus = [f.strip() for f in focus_text.splitlines() if f.strip()] or None
-        prompt = build_code_explainer_prompt(code, lang, focus)
-
-        st.success("Prompt de explicación generado.")
-
-        add_item(
-            kind="explainer",
-            title=f"Explicador de Código – {lang}",
-            content=prompt,
-            meta={"lenguaje": lang},
+        # Prompt para Gemini
+        system = (
+            "Actuás como un experto en programación y docente técnico. "
+            "Tu tarea es analizar y explicar código fuente con claridad y precisión."
+        )
+        prompt = (
+            f"Explicá el siguiente código en {lenguaje or 'lenguaje detectado automáticamente'} "
+            f"de forma {nivel}. Incluí:\n"
+            "- Qué hace el código\n"
+            "- Explicación paso a paso (si aplica)\n"
+            "- Posibles errores o mejoras\n"
+            "- Buenas prácticas sugeridas\n\n"
+            f"CÓDIGO:\n```{lenguaje}\n{codigo}\n```"
         )
 
-        st.code(prompt, language="markdown")
-
-        st.download_button(
-            label="Descargar como .md",
-            data=prompt.encode("utf-8"),
-            file_name="explicador_codigo.md",
-            mime="text/markdown",
-            use_container_width=True,
-        )
+        try:
+            with st.spinner("Analizando código con Gemini…"):
+                explicacion = generate_response(system, prompt)
+            st.text_area("📘 Explicación generada por Gemini", value=explicacion, height=300)
+            st.download_button(
+                label="Descargar explicación.md",
+                data=explicacion.encode("utf-8"),
+                file_name="explicacion_codigo.md",
+                mime="text/markdown",
+                use_container_width=True,
+            )
+        except Exception as e:
+            st.error(f"Ocurrió un error al llamar a Gemini: {e}")

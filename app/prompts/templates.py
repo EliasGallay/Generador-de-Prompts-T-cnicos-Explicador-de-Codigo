@@ -1,5 +1,3 @@
-# app/prompts/templates.py
-
 from datetime import datetime
 
 def build_technical_prompt(

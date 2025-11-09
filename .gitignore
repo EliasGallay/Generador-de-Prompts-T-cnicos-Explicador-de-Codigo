@@ -1,0 +1,62 @@
+# ===============================
+#  ENTORNOS Y DEPENDENCIAS
+# ===============================
+venv/
+.env
+.env.local
+.envExample
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# ===============================
+#  CONFIGURACIÓN Y METADATOS
+# ===============================
+.DS_Store
+.idea/
+.vscode/
+*.log
+
+# ===============================
+#  ARCHIVOS TEMPORALES / BACKUPS
+# ===============================
+*.tmp
+*.bak
+*.swp
+*.swo
+*.orig
+
+# ===============================
+#  COMPILADOS Y CACHÉ
+# ===============================
+*.egg-info/
+.eggs/
+build/
+dist/
+*.manifest
+*.spec
+
+# ===============================
+#  STREAMLIT Y CONFIGURACIONES LOCALES
+# ===============================
+.streamlit/secrets.toml
+.streamlit/config.toml
+
+# ===============================
+#  DATA Y ARCHIVOS GENERADOS
+# ===============================
+app/data/history.json
+*.sqlite3
+*.db
+*.json.backup
+*.csv
+*.zip
+
+# ===============================
+#  IA / API KEYS / OUTPUTS
+# ===============================
+*.model
+*.bin
+*.pt
+*.pkl
